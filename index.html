@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Go Out With Me?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #ffe6e6;
+      color: #ff4d4d;
+    }
+    h1 {
+      margin-top: 20px;
+      font-family: 'Courier New', Courier, monospace;
+      color: #ff1a75;
+    }
+    #buttons {
+      margin: 20px;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #yes {
+      background-color: #ff80bf;
+      color: white;
+    }
+    #no {
+      background-color: #ff6666;
+      color: white;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    img {
+      display: none;
+      margin: 20px auto;
+      max-width: 200px;
+      height: auto;
+    }
+    #celebration {
+      display: none;
+      font-size: 24px;
+      color: #ff1a75;
+      margin-top: 20px;
+    }
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 22px;
+      }
+      button {
+        padding: 10px 15px;
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>You're cute</h1>
+  <h1 id="mainText">Will you go out with me?</h1>
+  <div id="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
+  <img id="dogImage" src="" alt="Cute Dog">
+  <p id="celebration">Yay! Can't wait for our date! 🎉</p>
+  <audio id="backgroundMusic" loop>
+    <source src="assets/images/luv-music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="cheer">
+    <source src="assets/images/cheer.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <script>
+    let noClicks = 0;
+    let yesSize = 20;
+
+
+    const yesButton = document.getElementById("yes");
+    const noButton = document.getElementById("no");
+    const dogImage = document.getElementById("dogImage");
+    const mainText = document.getElementById("mainText");
+    const celebration = document.getElementById("celebration");
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    const cheer = document.getElementById("cheer");
+
+    const images = [
+      "assets/images/armsOutstretched.png",
+      "assets/images/DALL·E 2025-02-07 10.38.43 - A cute cartoon dog in vintage 1930s animation style, covered in a cloud of ash. Only its large, surprised eyes are visible through the dark soot. The_.png",
+      "assets/images/DALL·E 2025-02-07 10.27.53 - A cute 2D cartoon dog in the style of vintage 1930s animation, featuring classic rubber hose limbs, large expressive black eyes, and a cheerful smile.png"
+    ];
+
+    // Play music on page load
+    window.addEventListener("load", () => {
+      backgroundMusic.play().catch(() => {
+        console.log("Autoplay blocked. Waiting for user interaction...");
+      });
+    });
+
+    // Play music on user interaction if blocked
+    document.body.addEventListener("click", () => {
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+      }
+    });
+
+    yesButton.addEventListener("click", () => {
+  document.body.innerHTML = "<h1 style='color: #ff1a75;'>See you at 8 😎 (or whatever time is best for you)</h1>";
+  cheer.currentTime = 0; // Ensure the sound starts from the beginning
+  backgroundMusic.pause(); // Stop the background music
+  cheer.play().catch(() => {
+    console.log("Autoplay blocked. Waiting for user interaction...");
+  });
+});
+
+    noButton.addEventListener("click", () => {
+      noClicks++;
+
+      if (noClicks === 1) {
+        noButton.textContent = "Really?";
+      } else if (noClicks === 2) {
+        noButton.textContent = "Please!";
+      } else if (noClicks === 3) {
+        noButton.textContent = "JESSICA!!!";
+      } else if (noClicks === 4) {
+        mainText.textContent = "Yes or the dog explodes!!!";
+        noButton.textContent = "I hate dogs";
+        dogImage.src = images[2];
+        dogImage.style.display = "block";
+      } else if (noClicks === 5) {
+        mainText.textContent = "You're a terrible person... Dinner on Sunday? ;)";
+        noButton.textContent = "No";
+        dogImage.src = images[1];
+        dogImage.style.display = "block";
+      } else if (noClicks === 6) {
+        dogImage.style.display = "none"; // Hide the ash dog
+        noButton.style.backgroundImage = `url('${images[0]}')`;
+        noButton.style.backgroundSize = "contain";
+        noButton.style.backgroundRepeat = "no-repeat";
+        noButton.style.backgroundColor = "#ffe6e6"; // Match background color
+        noButton.style.border = "none";
+        noButton.style.width = "200px";
+        noButton.style.height = "100px";
+        noButton.textContent = ""; // Clear text
+
+        yesSize += 5;
+        yesButton.style.fontSize = yesSize + "px";
+        yesButton.style.padding = (yesSize / 2) + "px";
+      }
+    });
+  </script>
+</body>
+</html>
+
